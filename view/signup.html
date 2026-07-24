@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"
+        rel="stylesheet"
+    />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+
+    <title>Document</title>
+</head>
+<body>
+    <div class="bg-gray-200 min-h-screen flex justify-center items-center animate_animated animate_fadeIn">
+        <div class="p-8 w-5/12 bg-white flex  flex-col items-center space-y-2">
+            <div class="flex gap-2 items-center">
+                <i class="ri-contrast-2-fill text-violet-700 text-5xl"></i>
+                <h1 class="text-3xl font-semibold">Filemoon</h1>
+            </div>
+
+            <form action="" class="w-full space-y-6">
+                <div class="space-y-2">
+                    <label for="fullname" class="text-gray-500 text-[17x] block">Fullname </label>
+                    <input type="text" 
+                           name="fullname" 
+                           id="fullname"
+                           class="w-full border border-gray-300 rounded p-3"
+                           placeholder="type your name here"
+                           required />
+                </div>
+                <div class="space-y-2">
+                    <label for="mobile" class="text-gray-500 text-[17x] block">Mobile</label>
+                    <input type="mobile" 
+                           name="mobile" 
+                           id="mobile"
+                           class="w-full border border-gray-300 rounded p-3"
+                           placeholder="94******41"
+                           required />
+                </div>
+                <div class="space-y-2">
+                    <label for="email" class="text-gray-500 text-[17x] block">email </label>
+                    <input type="email" 
+                           name="email" 
+                           id="email"
+                           class="w-full border border-gray-300 rounded p-3"
+                           placeholder="abc@gmail.com"
+                           required />
+                </div>
+                <div class="space-y-2">
+                    <label for="password" class="text-gray-500 text-[17x] block">password</label>
+                    <input type="password" 
+                           name="password" 
+                           id="password"
+                           class="w-full border border-gray-300 rounded p-3"
+                           placeholder="*********"
+                           required />
+                </div>
+                <button type="submit"
+                        class="w-full bg-violet-500 text-white font-semibold rounded p-3 hover:bg-violet-700">Sign In
+                </button>
+            </form>
+            <div class="flex justify-center gap-2 items-center">
+                <p> Already have an account</p>
+                <a href="#" class="text-green-500 text-sm font-semibold">Sign In</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
