@@ -52,6 +52,73 @@
                 </button>
              </div>
         </aside>
+        <!-- Main-Content -->
+        <section id="sectionn" style="margin-left: 250px; transition: 0.3s;">
+            <!-- Navbar-starts-here -->
+            <nav class="bg-white px-6 py-4 w-full shadow-lg flex justify-between items-center">
+                <div class="flex items-center gap-4">
+                    <i class="ri-contrast-2-fill text-4xl text-violet-700"></i>
+                    <h1 class="text-2xl font-semibold">Filemoon</h1>
+                </div>
+                <div class="space-x-2">
+                    <button class="bg-gray-100 px-3 py-2 rounded hover:bg-gray-200">
+                        <i class="ri-logout-circle-r-line"></i>
+                    </button>
+                    <button onclick="toggleSidebar()" class="bg-gray-100 px-3 py-2 rounded hover:bg-gray-200">
+                        <i class="ri-menu-2-line"></i>
+                    </button>
+                </div>
+            </nav>
+            <div class="p-6 space-y-4">
+                <h1 class="text-lg font-medium"> dashboard</h1>
+                
+                <div class="grid grid-cols-4 gap-8">
+                    <div class="overflow-hidden relative bg-white rounded-lg shadow hover:shadow-lg h-40 flex items-center justify-center flex-col">
+                        <h1 class="text-xl font-medium text-gray-600"> Videos</h1>
+                        <p class="text-4xl font-bold">25609</p>
+                        <div class="flex justify-center items-center w-[100px] h-[100px] rounded-full absolute top-7 -left-4" 
+                             style="background-image: linear-gradient(to right, #68c668 0%, #6465da 0%, #cf6cc9 33%, #ee609c 66%, #ee609c 100%);">
+                            <i class="ri-file-video-fill text-white teext-4xl"></i>
+                        </div>
+                    </div>
+
+                    <div class="overflow-hidden relative bg-white rounded-lg shadow hover:shadow-lg h-40 flex items-center justify-center flex-col">
+                        <h1 class="text-xl font-medium text-gray-600"> Audio</h1>
+                        <p class="text-4xl font-bold">15662</p>
+                        <div class="flex justify-center items-center w-[100px] h-[100px] rounded-full absolute top-7 -left-4" 
+                             style="background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);">
+                            <i class="ri-folder-music-line text-white teext-4xl"></i>
+                        </div>
+                    </div>
+
+                    <div class="overflow-hidden relative bg-white rounded-lg shadow hover:shadow-lg h-40 flex items-center justify-center flex-col">
+                        <h1 class="text-xl font-medium text-gray-600">PDF</h1>
+                        <p class="text-4xl font-bold">25609</p>
+                        <div class="flex justify-center items-center w-[100px] h-[100px] rounded-full absolute top-7 -left-4" 
+                             style="background-image: linear-gradient(to right, #f83600 0%, #f9d432 100%);">
+                            <i class="ri-file-pdf-2-line text-white teext-4xl"></i>
+                        </div>
+                    </div>
+
+                    <div class="overflow-hidden relative bg-white rounded-lg shadow hover:shadow-lg h-40 flex items-center justify-center flex-col">
+                        <h1 class="text-xl font-medium text-gray-600">Image</h1>
+                        <p class="text-4xl font-bold">750</p>
+                        <div class="flex justify-center items-center w-[100px] h-[100px] rounded-full absolute top-7 -left-4" 
+                             style="background-image: linear-gradient(to right,#92fe9d 0%, #009cff 100%);">
+                            <i class="ri-file-image-line text-white teext-4xl"></i>
+                        </div>
+                    </div>
+
+
+                    <div class="col-span-2 overflow-hidden relative bg-white rounded-lg shadow hover:shadow-lg p-6">
+                        <h1 class="text-xl font-semibold text-gray-600">Recent Files</h1>
+                    </div>
+                     <div class="col-span-2 overflow-hidden relative bg-white rounded-lg shadow hover:shadow-lg p-6">
+                        <h1 class="text-xl font-semibold text-gray-600">Recent Shared</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
     <script src="../js/layout.js"></script>
 </body>
