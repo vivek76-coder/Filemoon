@@ -24,7 +24,7 @@ const userSchema = new Schema({
     trim: true,
     required: true,
   },
-});
+}, {timestamps: true});
 
 userSchema.pre("save", async function (next) {
   const count = await model("User").countDocuments({ email: this.email });
