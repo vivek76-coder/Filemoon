@@ -1,5 +1,6 @@
 const FileModel = require("../model/file.model");
 const fs = require("fs")
+const path = require("path")
 
 const createFile = async (req, res)=>{
     try{
@@ -44,8 +45,26 @@ const deleteFile = async (req, res)=>{
     }
 }
 
+const downloadFile = async (req, res)=>{
+    const {id} = req.params
+    const file = await FileModel.findById(id)
+
+    if(!file)
+        return res.status(404).json({message: "file not found"})
+
+    const root = process.cwd()
+    const filePath = path.join(root, file.path)
+
+    res.setHeader('Content-Disposition', `attachment; filename="${file.filename}"`)
+
+    res.sendFile(filePath, (err)=>{
+        if(err)
+            res.status(404).json({message: "file not found"})
+    })
+}
 module.exports = {
     createFile,
     fetchFile,
-    deleteFile
+    deleteFile,
+    downloadFile
 }

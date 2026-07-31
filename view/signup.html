@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/axios@1.13.2/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 
     <link
         href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"
@@ -14,6 +16,7 @@
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
 
     <title>Document</title>
 </head>
@@ -25,7 +28,7 @@
                 <h1 class="text-3xl font-semibold">Filemoon</h1>
             </div>
 
-            <form action="" class="w-full space-y-6">
+            <form action="" class="w-full space-y-6" onsubmit="signup(event)">
                 <div class="space-y-2">
                     <label for="fullname" class="text-gray-500 text-[17x] block">Fullname </label>
                     <input type="text" 
@@ -68,9 +71,10 @@
             </form>
             <div class="flex justify-center gap-2 items-center">
                 <p> Already have an account</p>
-                <a href="#" class="text-green-500 text-sm font-semibold">Sign In</a>
+                <a href="index.html" class="text-green-500 text-sm font-semibold">Sign In</a>
             </div>
         </div>
     </div>
+    <script src="js/signup.js"></script>
 </body>
 </html>

@@ -6,9 +6,12 @@ mongoose.connect(process.env.DB)
 
 const express = require("express")
 const { v4:uniqueId } = require("uuid")
+const cors = require("cors")
 const { signUp, login } = require("./controller/user.controller")
-const { createFile, fetchFile, deleteFile } = require("./controller/file.controller")
+const { createFile, fetchFile, deleteFile, downloadFile } = require("./controller/file.controller")
+const { fetchDashboard } = require("./controller/dashboard.controller")
 const multer = require("multer")
+
 const storage = multer.diskStorage({
     destination: (req, file, next)=>{
         next(null, 'files/')
@@ -27,9 +30,14 @@ app.listen(process.env.PORT || 8080)
 app.use(express.static("view"))
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
+app.use(cors({
+    origin: "http://127.0.0.1:5500"
+}))
 
-app.post('/signUp', signUp)
+app.post('/signup', signUp)
 app.post('/login', login)
 app.post('/file', upload.single('file'), createFile)
 app.get('/file', fetchFile)
 app.delete("/file/:id", deleteFile)
+app.get('/file/download/:id', downloadFile)
+app.get('/dashboard', fetchDashboard)
