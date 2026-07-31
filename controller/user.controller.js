@@ -22,7 +22,7 @@ const login = async (req, res)=>{
         const isLogin = bcrypt.compareSync(password, user.password)
 
         if(!isLogin)
-            return res.status(200).json({message : "enter valid password"})
+            return res.status(401).json({message : "enter valid password"})
 
         res.status(200).json({message: "login success"})
 
