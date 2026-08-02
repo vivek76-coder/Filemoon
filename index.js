@@ -11,6 +11,7 @@ const { signUp, login } = require("./controller/user.controller")
 const { createFile, fetchFile, deleteFile, downloadFile } = require("./controller/file.controller")
 const { fetchDashboard } = require("./controller/dashboard.controller")
 const multer = require("multer")
+const { verifyToken } = require("./controller/token.controller")
 
 const storage = multer.diskStorage({
     destination: (req, file, next)=>{
@@ -37,6 +38,7 @@ app.use(cors({
 app.post('/signup', signUp)
 app.post('/login', login)
 app.post('/file', upload.single('file'), createFile)
+app.post('/token/verify', verifyToken)
 app.get('/file', fetchFile)
 app.delete("/file/:id", deleteFile)
 app.get('/file/download/:id', downloadFile)

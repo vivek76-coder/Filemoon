@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/axios@1.13.2/dist/axios.min.js"></script>
 
     <link
         href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"
@@ -46,7 +47,7 @@
                     </button>
                 </a>
 
-                <button class="w-full bg-rose-400 text-white py-2.5 rounded hover:bg-rose-600">
+                <button class="w-full bg-rose-400 text-white py-2.5 rounded hover:bg-rose-600" onclick="logout()">
                     <i class="ri-logout-circle-r-line"></i>
                     <label for="logout">logout</label>
                 </button>
@@ -61,7 +62,7 @@
                     <h1 class="text-2xl font-semibold">Filemoon</h1>
                 </div>
                 <div class="space-x-2">
-                    <button class="bg-gray-100 px-3 py-2 rounded hover:bg-gray-200">
+                    <button class="bg-gray-100 px-3 py-2 rounded hover:bg-gray-200" onclick="logout()">
                         <i class="ri-logout-circle-r-line"></i>
                     </button>
                     <button onclick="toggleSidebar()" class="bg-gray-100 px-3 py-2 rounded hover:bg-gray-200">
@@ -120,6 +121,7 @@
             </div>
         </section>
     </div>
+    <script src="../js/session.js"></script>
     <script src="../js/layout.js"></script>
 </body>
 </html>
