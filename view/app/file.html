@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My-Files</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/axios@1.13.2/dist/axios.min.js"></script>
 
     <link
         href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"
@@ -26,19 +27,19 @@
             </div>
             <!-- lists -->
              <div class="px-6 flex flex-col gap-4" >
-                <a href="dashboard.html">
+                <a href="/dashboard">
                     <button class="w-full bg-rose-400 text-white py-2.5 rounded hover:bg-rose-600">
                     <i class="ri-apps-line"></i>
                     <label for="dashboard">dashboard</label>
                     </button>
                 </a>
-                <a href="my-file.html">
+                <a href="/files">
                     <button class="w-full bg-rose-400 text-white py-2.5 rounded hover:bg-rose-600">
                     <i class="ri-file-line"></i>
                     <label for="dashboard">My Files</label>
                     </button>
                 </a>
-                <a href="history.html">
+                <a href="/history">
                     <button class="w-full bg-rose-400 text-white py-2.5 rounded hover:bg-rose-600">
                     <i class="ri-history-line"></i>
                     <label for="dashboard">History</label>
@@ -168,7 +169,7 @@
             </div>
             <div class="flex flex-col gap-2">
                 <label class="text-gray-600 font-medium">Filename</label>
-                <input type="file" name="choosedFile" id="filename" class="py-2 px-3 rounded border border-gray-300" required>
+                <input type="file" name="file" id="filename" class="py-2 px-3 rounded border border-gray-300" required>
             </div>
             <button class="w-full py-2 px-3 bg-rose-400 hover:bg-rose-600 rounded font-medium text-white">Upload now</button>
         </form>
@@ -178,7 +179,9 @@
         </div>
     </div>
 </div>
+<script src="js/env.js"></script>
+<script src="../js/session.js"></script>
 <script src="../js/layout.js"></script>
-<script src="../js/my-files.js"></script>
+<script src="../js/file.js"></script>
 </body>
 </html>
