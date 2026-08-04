@@ -12,7 +12,6 @@ const createFile = async (req, res)=>{
             type: file.mimetype.split("/")[0],
             size: file.size
         }
-        console.log(file)
         const newFile = await FileModel.create(payload)
         res.status(200).json(newFile)
     }
