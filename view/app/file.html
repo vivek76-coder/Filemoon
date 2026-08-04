@@ -6,6 +6,12 @@
     <title>My-Files</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/axios@1.13.2/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+
+    <link 
+        rel="stylesheet" 
+        href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"/>
 
     <link
         href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"
@@ -80,73 +86,18 @@
                 </div>
 
                 <table class="w-full bg-white">
-                    <tr class="bg-slate-900 text-white text-left">
-                        <th class="font-medium py-4 pl-6">Filename</th>
-                        <th class="font-medium">Type</th>
-                        <th class="font-medium">Size</th>
-                        <th class="font-medium">Created</th>
-                        <th class="font-medium">Action</th>
-                    </tr>
+                    <thead>
+                        <tr class="bg-slate-900 text-white text-left">
+                            <th class="font-medium py-4 pl-6">Filename</th>
+                            <th class="font-medium">Type</th>
+                            <th class="font-medium">Size</th>
+                            <th class="font-medium">Created</th>
+                            <th class="font-medium">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-file">
 
-                    <tr class="text-gray-500 border-b border-gray-100">
-                        <td class="py-4 pl-6">Introduction to html</td>
-                        <td>Image</td>
-                        <td>20.03Mb</td>
-                        <td>24 june 2025</td>
-                        <td>
-                            <div class="space-x-3">
-                                <button class="bg-rose-400 px-2 py-1 text-white hover:bg-rose-600 rounded">
-                                    <i class="ri-delete-bin-4-line"></i>
-                                </button>
-                                <button class="bg-green-400 px-2 py-1 text-white hover:bg-green-500 rounded">
-                                    <i class="ri-download-line"></i>
-                                </button>
-                                <button class="bg-amber-400 px-2 py-1 text-white hover:bg-amber-600 rounded">
-                                    <i class="ri-share-line"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr class="text-gray-500 border-b border-gray-100">
-                        <td class="py-4 pl-6">Introduction to html</td>
-                        <td>Image</td>
-                        <td>20.03Mb</td>
-                        <td>24 june 2025</td>
-                        <td>
-                            <div class="space-x-3">
-                                <button class="bg-rose-400 px-2 py-1 text-white hover:bg-rose-600 rounded">
-                                    <i class="ri-delete-bin-4-line"></i>
-                                </button>
-                                <button class="bg-green-400 px-2 py-1 text-white hover:bg-green-500 rounded">
-                                    <i class="ri-download-line"></i>
-                                </button>
-                                <button class="bg-amber-400 px-2 py-1 text-white hover:bg-amber-600 rounded">
-                                    <i class="ri-share-line"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr class="text-gray-500 border-b border-gray-100">
-                        <td class="py-4 pl-6">Introduction to html</td>
-                        <td>Image</td>
-                        <td>20.03Mb</td>
-                        <td>24 june 2025</td>
-                        <td>
-                            <div class="space-x-3">
-                                <button class="bg-rose-400 px-2 py-1 text-white hover:bg-rose-600 rounded">
-                                    <i class="ri-delete-bin-4-line"></i>
-                                </button>
-                                <button class="bg-green-400 px-2 py-1 text-white hover:bg-green-500 rounded">
-                                    <i class="ri-download-line"></i>
-                                </button>
-                                <button class="bg-amber-400 px-2 py-1 text-white hover:bg-amber-600 rounded">
-                                    <i class="ri-share-line"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                    </tbody>
                 </table>
             </div>
     </section>
@@ -162,24 +113,24 @@
              </button>
         </div>
         <div class="h-px bg-gray-100 -mx-6"></div>
-        <form action="" class="space-y-6">
+        <form action="" class="space-y-6" onsubmit="uploadFile(event)">
             <div class="flex flex-col gap-2">
                 <label class="text-gray-600 font-medium">Filename</label>
                 <input type="text" name="filename" id="filename" class="py-2 px-3 rounded border border-gray-300" placeholder="Enter file name" required>
             </div>
             <div class="flex flex-col gap-2">
                 <label class="text-gray-600 font-medium">Filename</label>
-                <input type="file" name="file" id="filename" class="py-2 px-3 rounded border border-gray-300" required>
+                <input type="file" name="file" id="choosenFile" class="py-2 px-3 rounded border border-gray-300" required>
             </div>
-            <button class="w-full py-2 px-3 bg-rose-400 hover:bg-rose-600 rounded font-medium text-white">Upload now</button>
+            <button class="w-full py-2 px-3 bg-rose-400 hover:bg-rose-600 rounded font-medium text-white" id="upload-btn">Upload now</button>
         </form>
         
         <div class="bg-gray-200 h-4">
-            <div class="h-full bg-green-500 w-6/12 text-sm text-gray-50 text-center ">50%</div>
+            <div class="h-full bg-green-500 text-sm text-gray-50 text-center " style="width: 0;" id="progress-bar"></div>
         </div>
     </div>
 </div>
-<script src="js/env.js"></script>
+<script src="../js/env.js"></script>
 <script src="../js/session.js"></script>
 <script src="../js/layout.js"></script>
 <script src="../js/file.js"></script>

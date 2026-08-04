@@ -4,13 +4,15 @@ const path = require("path")
 
 const createFile = async (req, res)=>{
     try{
+        const { filename } = req.body
         const file = req.file
         const payload = {
-            filename: file.filename,
+            filename: filename,
             path: (file.destination+file.filename),
             type: file.mimetype.split("/")[0],
             size: file.size
         }
+        console.log(file)
         const newFile = await FileModel.create(payload)
         res.status(200).json(newFile)
     }
