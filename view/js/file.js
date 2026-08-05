@@ -35,8 +35,15 @@ const uploadFile = async (e) => {
     e.preventDefault();
     const progress = document.getElementById("progress-bar");
     const uploadBtn = document.getElementById("upload-btn");
+
     const form = e.target;
     const formData = new FormData(form);
+
+    const file = formData.get('file')
+    const size  = getSize(file.size)
+    if(size > 200)
+      return toast.error("max size 200 MB")
+
     const option = {
       onUploadProgress: (e) => {
         const loaded = e.loaded;
@@ -50,11 +57,13 @@ const uploadFile = async (e) => {
     const { data } = await axios.post("/api/files", formData, option);
     toast.success(`${data.filename} uploaded successfully`);
     uploadBtn.disabled = false;
+
     fetchFile();
     progress.style.width = 0;
     progress.innerHTML = "";
     toggleDrawer();
     form.reset();
+    
   } catch (err) {
     toast.error(err.response ? err.response.data.message : err.message);
   }
