@@ -59,11 +59,11 @@ const downloadFile = async (req, res)=>{
 
     if(!file)
         return res.status(404).json({message: "file not found"})
-
+    const ext = file.type.split("/").pop()
     const root = process.cwd()
     const filePath = path.join(root, file.path)
 
-    res.setHeader('Content-Disposition', `attachment; filename="${file.filename}"`)
+    res.setHeader('Content-Disposition', `attachment; filename="${file.filename}.${ext}"`)
 
     res.sendFile(filePath, (err)=>{
         if(err)
