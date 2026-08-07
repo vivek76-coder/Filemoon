@@ -12,6 +12,7 @@ const cors = require("cors")
 const { signUp, login } = require("./controller/user.controller")
 const { createFile, fetchFile, deleteFile, downloadFile } = require("./controller/file.controller")
 const { fetchDashboard } = require("./controller/dashboard.controller")
+const { shareFile } = require("./controller/share.controller")
 const multer = require("multer")
 const { verifyToken } = require("./controller/token.controller")
 
@@ -79,3 +80,10 @@ app.get('/api/file', fetchFile)
 app.delete("/api/file/:id", deleteFile)
 app.get('/api/file/download/:id', downloadFile)
 app.get('/api/dashboard', fetchDashboard)
+app.post('/api/share', shareFile)
+
+
+// not found page
+app.use((req, res)=>{
+    res.status(404).json({message: "Endpoint not found"})
+})

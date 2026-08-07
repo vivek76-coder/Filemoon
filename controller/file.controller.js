@@ -1,7 +1,14 @@
+const { application } = require("express");
 const FileModel = require("../model/file.model");
 const fs = require("fs")
-const path = require("path")
+const path = require("path");
 
+const getFileType = (type)=>{
+    const ext = type.split("/").pop()
+    if(ext === 'x-msdownload')
+        return "application/exe"
+    return type
+} 
 const createFile = async (req, res)=>{
     try{
         const { filename } = req.body
@@ -9,7 +16,7 @@ const createFile = async (req, res)=>{
         const payload = {
             filename: filename,
             path: (file.destination+file.filename),
-            type: file.mimetype.split("/")[0],
+            type: getFileType(file.mimetype),
             size: file.size
         }
         const newFile = await FileModel.create(payload)
