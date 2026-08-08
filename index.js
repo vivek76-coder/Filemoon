@@ -9,13 +9,15 @@ const express = require("express")
 const path = require("path")
 const { v4:uniqueId } = require("uuid")
 const cors = require("cors")
+
 const { signUp, login } = require("./controller/user.controller")
 const { createFile, fetchFile, deleteFile, downloadFile } = require("./controller/file.controller")
 const { fetchDashboard } = require("./controller/dashboard.controller")
 const { shareFile } = require("./controller/share.controller")
-const multer = require("multer")
+const AuthMiddleware = require("./middleware/auth.middleware")
 const { verifyToken } = require("./controller/token.controller")
 
+const multer = require("multer")
 const storage = multer.diskStorage({
     destination: (req, file, next)=>{
         next(null, 'files/')
@@ -27,6 +29,7 @@ const storage = multer.diskStorage({
         next(null, name)
     }
 })
+
 const upload = multer({
     storage: storage,
     limits: {fileSize : 200 * 1000 * 1000}
@@ -76,11 +79,11 @@ app.post('/api/signup', signUp)
 app.post('/api/login', login)
 app.post('/api/files', upload.single('file'), createFile)
 app.post('/api/token/verify', verifyToken)
-app.get('/api/file', fetchFile)
-app.delete("/api/file/:id", deleteFile)
+app.get('/api/file', AuthMiddleware, fetchFile)
+app.delete("/api/file/:id", AuthMiddleware, deleteFile)
 app.get('/api/file/download/:id', downloadFile)
-app.get('/api/dashboard', fetchDashboard)
-app.post('/api/share', shareFile)
+app.get('/api/dashboard', AuthMiddleware, fetchDashboard)
+app.post('/api/share', AuthMiddleware, shareFile)
 
 
 // not found page

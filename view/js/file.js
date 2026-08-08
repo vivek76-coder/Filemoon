@@ -14,6 +14,15 @@ const checkSession = async () => {
   if (!session) location.href = "/login";
 };
 
+const getToken = () => {
+  const options = {
+    headers: {
+      Authorization: ` Bearer ${localStorage.getItem("authToken")}`,
+    },
+  };
+  return options;
+};
+
 const drawer = document.getElementById("drawer");
 const toggleDrawer = () => {
   const rightValue = drawer.style.right;
@@ -40,6 +49,7 @@ const getExtentionForDownload = (ext) => {
 
   return ext;
 };
+
 const uploadFile = async (e) => {
   try {
     e.preventDefault();
@@ -61,6 +71,7 @@ const uploadFile = async (e) => {
         progress.style.width = `${precentValue}%`;
         progress.innerHTML = `${precentValue} %`;
       },
+      ...getToken()
     };
     uploadBtn.disabled = true;
     const { data } = await axios.post("/api/files", formData, option);
@@ -80,7 +91,8 @@ const uploadFile = async (e) => {
 const fetchFile = async () => {
   try {
     const table = document.getElementById("table-file");
-    const { data } = await axios.get("/api/file");
+    const { data } = await axios.get("/api/file", getToken());
+
     table.innerHTML = "";
     for (let file of data) {
       const ui = `<tr class="text-gray-500 border-b border-gray-100">
@@ -114,7 +126,7 @@ const deleteFile = async (id, button) => {
   try {
     button.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
     button.disabled = true;
-    await axios.delete(`api/file/${id}`);
+    await axios.delete(`api/file/${id}`, getToken());
     fetchFile();
   } catch (err) {
     toast.error(err.response ? err.response.data.message : err.message);
@@ -179,7 +191,7 @@ const shareFile = async (id, e) => {
       email: email,
       fileId: id,
     };
-    await axios.post("/api/share", payload);
+    await axios.post("/api/share", payload, getToken());
     toast.success("send");
   } catch (err) {
     toast.error(err.response ? err.response.data.message : err.message);
