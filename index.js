@@ -13,7 +13,7 @@ const cors = require("cors")
 const { signUp, login } = require("./controller/user.controller")
 const { createFile, fetchFile, deleteFile, downloadFile } = require("./controller/file.controller")
 const { fetchDashboard } = require("./controller/dashboard.controller")
-const { shareFile } = require("./controller/share.controller")
+const { shareFile, fetchShared } = require("./controller/share.controller")
 const AuthMiddleware = require("./middleware/auth.middleware")
 const { verifyToken } = require("./controller/token.controller")
 
@@ -77,13 +77,15 @@ app.get('/history',(req, res)=>{
 // -----------API_ENDPOINT--------------
 app.post('/api/signup', signUp)
 app.post('/api/login', login)
-app.post('/api/files', upload.single('file'), createFile)
+app.post('/api/files', AuthMiddleware, upload.single('file'), createFile)
 app.post('/api/token/verify', verifyToken)
 app.get('/api/file', AuthMiddleware, fetchFile)
 app.delete("/api/file/:id", AuthMiddleware, deleteFile)
 app.get('/api/file/download/:id', downloadFile)
 app.get('/api/dashboard', AuthMiddleware, fetchDashboard)
 app.post('/api/share', AuthMiddleware, shareFile)
+app.get('/api/share', AuthMiddleware, fetchShared)
+
 
 
 // not found page

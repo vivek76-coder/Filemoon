@@ -69,18 +69,39 @@ const shareFile = async (req, res)=>{
             pass: process.env.SMTP_PASSWORD
         }
         })
-        const payload = {
+        const payloadForSendMail = {
             from: process.env.SMTP_EMAIL,
             to: email,
             subject : 'Filemoon - new file received',
             html : getMailTemplate(link) 
         }
-        const response = await conn.sendMail(payload)
-        res.status(200).json(response)
+
+        const payloadForShareModel = {
+            user: req.user.id,
+            receiverEmail: email,
+            file: fileId
+        }
+       
+        await Promise.all([
+                conn.sendMail(payloadForSendMail),
+                ShareModel.create(payloadForShareModel)
+        ])
+        
+        res.status(200).json({message : "Email sent"})
+    } catch(err) {
+        res.status(500).json({message : err.message})
+    }
+}
+
+const fetchShared = async (req, res)=>{
+    try{
+        const file = await ShareModel.find({user: req.user.id}).populate('file').sort({createdAt : -1})
+        res.status(200).json(file)
     } catch(err) {
         res.status(500).json({message : err.message})
     }
 }
 module.exports = {
-    shareFile
+    shareFile, 
+    fetchShared
 }

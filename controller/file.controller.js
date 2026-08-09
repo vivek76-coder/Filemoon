@@ -1,4 +1,3 @@
-const { application } = require("express");
 const FileModel = require("../model/file.model");
 const fs = require("fs")
 const path = require("path");
@@ -14,10 +13,11 @@ const createFile = async (req, res)=>{
         const { filename } = req.body
         const file = req.file
         const payload = {
+            user: req.user.id,
             filename: filename,
             path: (file.destination+file.filename),
             type: getFileType(file.mimetype),
-            size: file.size
+            size: file.size,
         }
         const newFile = await FileModel.create(payload)
         res.status(200).json(newFile)
@@ -29,7 +29,7 @@ const createFile = async (req, res)=>{
 
 const fetchFile = async (req, res)=>{
     try{
-        const file = await FileModel.find()
+        const file = await FileModel.find({user: req.user.id}).sort({createdAt: -1})
         res.status(200).json(file)
     }
     catch(err){

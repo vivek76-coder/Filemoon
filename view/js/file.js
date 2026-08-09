@@ -1,13 +1,13 @@
 axios.defaults.baseURL = SERVER;
 
-const toast = new Notyf({
-  position: { x: "center", y: "top" },
-});
-
 window.onload = () => {
   checkSession();
   fetchFile();
 };
+
+const toast = new Notyf({
+  position: { x: "center", y: "top" },
+});
 
 const checkSession = async () => {
   const session = await getSession();
@@ -71,7 +71,7 @@ const uploadFile = async (e) => {
         progress.style.width = `${precentValue}%`;
         progress.innerHTML = `${precentValue} %`;
       },
-      ...getToken()
+      ...getToken(),
     };
     uploadBtn.disabled = true;
     const { data } = await axios.post("/api/files", formData, option);

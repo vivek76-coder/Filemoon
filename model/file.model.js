@@ -1,6 +1,11 @@
-const {Schema, model} = require("mongoose")
+const {Schema, model, default: mongoose} = require("mongoose")
 
 const fileSchema = new Schema({
+    user: {
+        type: mongoose.Types.ObjectId,
+        ref : 'User',
+        required: true
+    },
     filename: {
         type: String,
         trim: true,

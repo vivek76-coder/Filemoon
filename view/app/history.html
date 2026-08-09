@@ -6,6 +6,13 @@
     <title>History</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/axios@1.13.2/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+
+    <link 
+        rel="stylesheet" 
+        href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
 
     <link
         href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"
@@ -46,7 +53,7 @@
                     </button>
                 </a>
 
-                <button class="w-full bg-rose-400 text-white py-2.5 rounded hover:bg-rose-600">
+                <button class="w-full bg-rose-400 text-white py-2.5 rounded hover:bg-rose-600" onclick="logout()">
                     <i class="ri-logout-circle-r-line"></i>
                     <label for="logout">logout</label>
                 </button>
@@ -61,7 +68,7 @@
                     <h1 class="text-2xl font-semibold">Filemoon</h1>
                 </div>
                 <div class="space-x-2">
-                    <button class="bg-gray-100 px-3 py-2 rounded hover:bg-gray-200">
+                    <button class="bg-gray-100 px-3 py-2 rounded hover:bg-gray-200" onclick="logout()">
                         <i class="ri-logout-circle-r-line"></i>
                     </button>
                     <button onclick="toggleSidebar()" class="bg-gray-100 px-3 py-2 rounded hover:bg-gray-200">
@@ -74,38 +81,14 @@
                     <h1 class="text-lg font-medium">History</h1>
                 </div>
                 <table class="w-full bg-white">
-                    <tr class="bg-slate-900 text-white text-left">
-                        <th class="font-medium py-4 pl-6">Filename</th>
-                        <th class="font-medium">Email</th>
-                        <th class="font-medium">DateTime</th>
-                        <th class="font-medium">Action</th>
-                    </tr>
-
-                    <tr class="text-gray-500 border-b border-gray-100">
-                        <td class="py-4 pl-6">Introduction to html</td>
-                        <td>Ersaurav@gmail.com</td>
-                        <td>24 June 2025</td>
-                        <td>
-                            <div class="space-x-3">
-                                <button class="bg-rose-400 px-2 py-1 text-white hover:bg-rose-600 rounded">
-                                    <i class="ri-delete-bin-4-line"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr class="text-gray-500 border-b border-gray-100">
-                        <td class="py-4 pl-6">Introduction to html</td>
-                        <td>Ersaurav@gmail.com</td>
-                        <td>24 June 2025</td>
-                        <td>
-                            <div class="space-x-3">
-                                <button class="bg-rose-400 px-2 py-1 text-white hover:bg-rose-600 rounded">
-                                    <i class="ri-delete-bin-4-line"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                    <thead>
+                        <tr class="bg-slate-900 text-white text-left">
+                            <th class="font-medium py-4 pl-6 capitalize">Filename</th>
+                            <th class="font-medium">Email</th>
+                            <th class="font-medium">DateTime</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody"></tbody>
                 </table>
             </div>
     </section>

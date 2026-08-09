@@ -4,8 +4,9 @@ const toast = new Notyf({
   position: { x: "center", y: "top" },
 });
 
-const checkSession = ()=>{
-    if(getSession())
+const checkSession = async ()=>{
+    const session = await getSession()
+    if(session)
         location.href = '/dashboard'
 }
 checkSession()
