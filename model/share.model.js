@@ -1,4 +1,4 @@
-const { Schema, Mongoose, model, default: mongoose} = require("mongoose")
+const { Schema, model, default: mongoose} = require("mongoose")
 
 const shareSchema = new Schema({
     user: {
