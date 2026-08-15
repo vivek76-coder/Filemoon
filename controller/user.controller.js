@@ -49,6 +49,8 @@ const login = async (req, res)=>{
 const uploadImage = async (req, res)=>{
     try{
         const {filename} = req.file
+        if(!filename)
+            return res.status(404).json({message: "file not found"})
         const user = await UserModel.findByIdAndUpdate(req.user.id, {image: filename}, {new: true})
         if(!user)
             return res.status(401).json({message: "invalid request"})

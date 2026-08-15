@@ -3,6 +3,7 @@ axios.defaults.baseURL = SERVER;
 window.onload = () => {
   checkSession();
   fetchFile();
+  fetchImage()
 };
 
 const toast = new Notyf({
@@ -199,3 +200,43 @@ const shareFile = async (id, e) => {
     Swal.close();
   }
 };
+
+const uploadImage = ()=>{
+    try{
+        const input = document.createElement("input")
+        const pic = document.getElementById('pic')
+        input.type = 'file'
+        input.accept = 'image/*'
+        input.click()
+    
+        input.onchange = async ()=>{
+            const file = input.files[0]
+            const formdata = new FormData()
+            formdata.append('picture', file)
+            await axios.post('/api/profile-picture', formdata, getToken())
+            fetchImage()
+        }
+
+    } catch(err) {
+        toast.error(err.response ? err.response.data.message : err.message)
+    }
+}
+
+const fetchImage = async ()=>{
+    try{
+        const options = {
+            responseType : 'blob',
+            ...getToken()
+        }
+        const {data} = await axios.get('/api/profile-picture', options)
+        const url = URL.createObjectURL(data)
+        const pic = document.getElementById("pic")
+        pic.src = url
+    } catch(err) {
+        if(!err.response)
+            return toast.error(err.message)
+        const error = await (err.response.data.message).text()
+        const {message} = JSON.parse(error)
+        toast.error(message)
+    }
+}

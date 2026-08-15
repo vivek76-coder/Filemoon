@@ -25,12 +25,12 @@
 </head>
 <body>
     <div class="bg-gray-100 h-screen">
-        <aside class="overflow-hidden py-6 bg-gradient-to-r from-cyan-500 to-blue-500 fixed top-0 left-0 h-full" id="sidebar" style="width: 250px; transition: 0.3s;">
+        <aside class="space-y-6 py-6 bg-gradient-to-r from-cyan-500 to-blue-500 fixed top-0 left-0 h-full" id="sidebar" style="width: 250px; transition: 0.3s;">
             <!-- profile-section -->
             <div class="flex flex-col items-center">
-                <img src="../images/avt.png" alt="" width="80">
-                <h1 class="text-lg font-medium text-white">Er saurav</h1>
-                <p class="text-sm text-gray-100">saurav@gmail.com</p>
+                <img src="../images/avt.png" alt="" class="h-[80px] w-[80px] rounded-full object-cover" title="change-picture" id="pic" onclick="uploadImage()">
+                <h1 class="text-lg font-medium text-white" id="fullname"></h1>
+                <p class="text-sm text-gray-100" id="email"></p>
             </div>
             <!-- lists -->
              <div class="px-6 flex flex-col gap-4" >
