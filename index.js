@@ -4,6 +4,10 @@ dotenv.config()
 const mongoose = require("mongoose")
 mongoose.connect(process.env.DB)
 
+.then(()=>console.log("DB connected successful"))
+
+.catch((err)=>console.log("connection failed"))
+
 const root  = process.cwd()
 const express = require("express")
 const path = require("path")
@@ -36,7 +40,7 @@ const upload = multer({
 })
 
 const app = express()
-app.listen(process.env.PORT || 8080) 
+app.listen(process.env.PORT || 8080, ()=>console.log("app running")) 
 
 app.use(express.static("view"))
 app.use(express.json())

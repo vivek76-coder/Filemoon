@@ -66,12 +66,12 @@ const fetchImage = async (req, res)=>{
     try{
         const {image} = await UserModel.findById(req.user.id)
         if(!image)
-            return res.status(404).json({message: "image not found"})
+            return res.status(404).end()
         const root = process.cwd()
         const file = path.join(root, 'files', image)
         res.sendFile(file, (err)=>{
             if(err){
-                res.status(404).json({message : "image not found"})
+                res.status(404).end()
             }
         })
 

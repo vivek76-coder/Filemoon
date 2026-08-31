@@ -1,8 +1,9 @@
 axios.defaults.baseURL = SERVER
 window.onload = ()=>{
-    checkSession()
-    fetchshare()
-    fetchImage()
+    checkSession();
+    fetchshare();
+    fetchImage();
+    showUserDetail();
 }
 
 const checkSession = async ()=>{
@@ -10,6 +11,7 @@ const checkSession = async ()=>{
     if(!session)
         location.href = '/login'
 }
+
 const toast = new Notyf({
     position: {x: 'center', y:'top'}
 })
@@ -23,6 +25,14 @@ const getToken = () => {
   };
   return options;
 };
+
+const showUserDetail = async ()=>{
+    const session = await getSession()
+    const fullname = document.getElementById("fullname")
+    const email = document.getElementById("email")
+    fullname.innerHTML = session.fullname
+    email.innerHTML = session.email
+}
 
 const fetchshare = async ()=>{
     try{
@@ -79,7 +89,7 @@ const fetchImage = async ()=>{
     } catch(err) {
         if(!err.response)
             return toast.error(err.message)
-        const error = await (err.response.data.message).text()
+        const error = await (err.response.data).text()
         const {message} = JSON.parse(error)
         toast.error(message)
     }

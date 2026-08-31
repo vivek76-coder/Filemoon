@@ -146,7 +146,7 @@ const fetchImage = async ()=>{
     } catch(err) {
         if(!err.response)
             return toast.error(err.message)
-        const error = await (err.response.data.message).text()
+        const error = await (err.response.data).text()
         const {message} = JSON.parse(error)
         toast.error(message)
     }

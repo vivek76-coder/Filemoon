@@ -3,7 +3,8 @@ axios.defaults.baseURL = SERVER;
 window.onload = () => {
   checkSession();
   fetchFile();
-  fetchImage()
+  fetchImage();
+  showUserDetail();
 };
 
 const toast = new Notyf({
@@ -51,6 +52,14 @@ const getExtentionForDownload = (ext) => {
   return ext;
 };
 
+const showUserDetail = async ()=>{
+    const session = await getSession()
+    const fullname = document.getElementById("fullname")
+    const email = document.getElementById("email")
+    fullname.innerHTML = session.fullname
+    email.innerHTML = session.email
+}
+
 const uploadFile = async (e) => {
   try {
     e.preventDefault();
@@ -85,6 +94,11 @@ const uploadFile = async (e) => {
     toggleDrawer();
     form.reset();
   } catch (err) {
+    /*if(!err.response)
+      return toast.error(err.message)
+    const error = await (err.response.data).text()
+    const {message} = JSON.parse(error)
+    toast.error(message)*/
     toast.error(err.response ? err.response.data.message : err.message);
   }
 };
@@ -156,7 +170,8 @@ const downloadFile = async (id, filename, button) => {
   } catch (err) {
     if (!err.response) return toast.error(err.message);
     const error = await err.response.data.text();
-    toast.error(JSON.parse(error));
+    const { message } = JSON.parse(error);
+    toast.error(message || err.message);
   } finally {
     button.innerHTML = '<i class="ri-download-line"></i>';
     button.disabled = false;
@@ -235,7 +250,7 @@ const fetchImage = async ()=>{
     } catch(err) {
         if(!err.response)
             return toast.error(err.message)
-        const error = await (err.response.data.message).text()
+        const error = await (err.response.data).text()
         const {message} = JSON.parse(error)
         toast.error(message)
     }
