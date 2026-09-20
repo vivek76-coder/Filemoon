@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My-Files</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/axios@1.13.2/dist/axios.min.js"></script>
@@ -11,133 +11,228 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css"
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css"
     />
-    <link 
-        rel="stylesheet" 
-        href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"/>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
 
     <link
-        href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"
-        rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"
+      rel="stylesheet"
     />
     <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <div class="bg-gray-100 h-screen">
-        <aside class="overflow-hidden py-6 bg-gradient-to-r from-cyan-500 to-blue-500 fixed top-0 left-0 h-full" id="sidebar" style="width: 250px; transition: 0.3s;">
-            <!-- profile-section -->
-            <div class="flex flex-col items-center">
-                <img src="../images/avt.png" alt="" class="h-[80px] w-[80px] rounded-full object-cover" title="change-picture" id="pic" onclick="uploadImage()">
-                <h1 class="text-lg font-medium text-white" id="fullname"></h1>
-                <p class="text-sm text-gray-100" id="email"></p>
+      <aside class="fixed left-0 top-0 bottom-0 bg-white border-r border-slate-200/80 z-50 flex flex-col justify-between select-none overflow-hidden" style="width: 0px; transition: 0.3s;" id="sidebar">
+      <div class="flex flex-col">
+        <!-- Logo & Branding -->
+        <div class="h-16 px-5 flex items-center justify-between border-b border-slate-100">
+          <div class="flex items-center gap-2.5">
+            <i class="ri-contrast-2-fill text-4xl text-violet-700"></i>
+            <span class="font-bold text-lg tracking-tight text-slate-900">Filemoon</span>
+          </div>
+          <button
+            class="flex items-center justify-center p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition-colors"
+            title="Collapse sidebar"
+            type="button"
+            onclick="toggleSidebar()"
+          >
+            <span class="material-symbols-outlined text-[18px]">keyboard_double_arrow_left</span>
+          </button>
+        </div>
+
+        <!-- User Profile Card -->
+        <div class="p-4">
+          <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-3">
+            <img
+              id="pic"
+              onclick="uploadImage()"
+              alt="Alex Morgan"
+              class="w-9 h-9 rounded-full object-cover ring-2 ring-white shadow-xs"
+              src="https://lh3.googleusercontent.com/aida/AEtjO1WQSyAPZsgJpBVQEjur6PVaFX5bZlRAUfUDFiOvlsQXF7HQ_ptazbAyACQM-A8fEtIBCAwij6bw3KoSWJheSq0Lig4hsC6TDyQvMNWbtsoUr_RJcLM0ase9WCqlXpXgTNZCcV2EI4HCpoID_-g80Khz3ouwY-ZrFe8vdpmtydv4GAb9rCNylyPaBDSFElriFqeCpAUtDpcWpnw5GRkXhTKtuP40ngJP3y5EKEEXbpJTQEeF9GvE9wH2vC0"
+            />
+            <div class="flex-1 min-w-0">
+              <div class="text-sm font-semibold truncate text-slate-800 leading-tight" id="fullname"></div>
+              <div class="text-xs text-slate-500 truncate mt-0.5" id="email"></div>
             </div>
-            <!-- lists -->
-             <div class="px-6 flex flex-col gap-4" >
-                <a href="/dashboard">
-                    <button class="w-full bg-rose-400 text-white py-2.5 rounded hover:bg-rose-600">
-                    <i class="ri-apps-line"></i>
-                    <label for="dashboard">dashboard</label>
-                    </button>
-                </a>
-                <a href="/files">
-                    <button class="w-full bg-rose-400 text-white py-2.5 rounded hover:bg-rose-600">
-                    <i class="ri-file-line"></i>
-                    <label for="dashboard">My Files</label>
-                    </button>
-                </a>
-                <a href="/history">
-                    <button class="w-full bg-rose-400 text-white py-2.5 rounded hover:bg-rose-600">
-                    <i class="ri-history-line"></i>
-                    <label for="dashboard">History</label>
-                    </button>
-                </a>
+          </div>
+        </div>
 
-                <button class="w-full bg-rose-400 text-white py-2.5 rounded hover:bg-rose-600" onclick="logout()">
-                    <i class="ri-logout-circle-r-line"></i>
-                    <label for="logout">logout</label>
-                </button>
-             </div>
-        </aside>
-    <!-- Main-Content -->
-        <section id="section" style="margin-left: 250px; transition: 0.3s;">
-            <!-- Navbar-starts-here -->
-            <nav class="bg-white px-6 py-4 w-full shadow-lg flex justify-between items-center">
-                <div class="flex items-center gap-4">
-                    <i class="ri-contrast-2-fill text-4xl text-violet-700"></i>
-                    <h1 class="text-2xl font-semibold">Filemoon</h1>
-                </div>
-                <div class="space-x-2">
-                    <button class="bg-gray-100 px-3 py-2 rounded hover:bg-gray-200" onclick="logout()">
-                        <i class="ri-logout-circle-r-line"></i>
-                    </button>
-                    <button onclick="toggleSidebar()" class="bg-gray-100 px-3 py-2 rounded hover:bg-gray-200">
-                        <i class="ri-menu-2-line"></i>
-                    </button>
-                </div>
-            </nav>
-            <div class="p-6 space-y-4">
-                <div class="flex justify-between items-center">
-                    <h1 class="text-lg font-medium">My-files</h1>
-                    <button onclick="toggleDrawer()" 
-                            class="bg-violet-500 hover:bg-violet-600 text-white px-6 py-2 rounded">
-                        <i class="ri-add-line"></i>
-                        <lable>Add File</lable>
-                    </button>
-                </div>
-
-                <table class="w-full bg-white">
-                    <thead>
-                        <tr class="bg-slate-900 text-white text-left">
-                            <th class="font-medium py-4 pl-6">Filename</th>
-                            <th class="font-medium">Type</th>
-                            <th class="font-medium">Size</th>
-                            <th class="font-medium">Created</th>
-                            <th class="font-medium">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="table-file">
-
-                    </tbody>
-                </table>
+        <!-- Navigation Links -->
+        <nav class="flex flex-col gap-1 px-3 mt-1">
+          <a
+            class="flex items-center justify-between px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 hover:text-slate-900 font-medium text-sm transition-colors"
+            href="/dashboard"
+          >
+            <div class="flex items-center gap-2.5">
+              <span class="material-symbols-outlined text-[19px]">grid_view</span>
+              <span>Dashboard</span>
             </div>
-    </section>
+            <span class="text-[11px] font-mono px-1.5 py-0.5 rounded bg-slate-100 text-slate-500">⌘1</span>
+          </a>
+          <a
+            aria-current="page"
+            class="flex items-center justify-between px-3 py-2 rounded-lg bg-indigo-600 text-white font-medium text-sm shadow-sm transition-colors"
+            href="/files"
+          >
+            <div class="flex items-center gap-2.5">
+              <span class="material-symbols-outlined text-[19px]">folder</span>
+              <span>My-Files</span>
+            </div>
+            <span class="text-[11px] font-mono px-1.5 py-0.5 rounded bg-indigo-700/60 text-indigo-100">⌘2</span>
+          </a>
 
-    <div class="fixed w-4/12 bg-white shad top-0 h-full p-6 space-y-6 z-50" 
-         style="right: -33.33%;
-                transition: 0.3s;"
-         id="drawer">
+
+          <a
+            class="flex items-center justify-between px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 hover:text-slate-900 font-medium text-sm transition-colors"
+            href="/history"
+          >
+            <div class="flex items-center gap-2.5">
+              <span class="material-symbols-outlined text-[19px]">schedule</span>
+              <span>Recent History</span>
+            </div>
+            <span class="text-[11px] font-mono px-1.5 py-0.5 rounded bg-slate-100 text-slate-500">⌘3</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Bottom Logout -->
+      <div class="p-3 border-t border-slate-100">
+        <button
+          class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-slate-600 hover:bg-rose-50 hover:text-rose-600 font-medium text-sm transition-colors group"
+          type="button"
+          onclick="logout()"
+        >
+          <div class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-[19px] group-hover:text-rose-600">logout</span>
+            <span>Log out</span>
+          </div>
+        </button>
+      </div>
+    </aside>
+      <!-- Main-Content -->
+      <section >
+        <!-- Navbar-starts-here -->
+        <nav
+          class="bg-white px-6 py-4 w-full shadow-lg flex justify-between items-center"
+        >
+          <div class="flex items-center gap-4">
+            <i class="ri-contrast-2-fill text-4xl text-violet-700"></i>
+            <h1 class="text-2xl font-semibold">Filemoon</h1>
+          </div>
+          <div class="space-x-2">
+            <button
+              class="bg-gray-100 px-3 py-2 rounded hover:bg-gray-200"
+              onclick="logout()"
+            >
+              <i class="ri-logout-circle-r-line"></i>
+            </button>
+            <button
+              onclick="toggleSidebar()"
+              class="bg-gray-100 px-3 py-2 rounded hover:bg-gray-200"
+            >
+              <i class="ri-menu-2-line"></i>
+            </button>
+          </div>
+        </nav>
+        <div class="p-6 space-y-4">
+          <div class="flex justify-between items-center">
+            <h1 class="text-lg font-medium">My-files</h1>
+            <button
+              onclick="toggleDrawer()"
+              class="bg-violet-500 hover:bg-violet-600 text-white px-6 py-2 rounded"
+            >
+              <i class="ri-add-line"></i>
+              <lable>Add File</lable>
+            </button>
+          </div>
+
+          <table class="w-full bg-white">
+            <thead>
+              <tr class="bg-slate-900 text-white text-left">
+                <th class="font-medium py-4 pl-6">Filename</th>
+                <th class="font-medium">Type</th>
+                <th class="font-medium">Size</th>
+                <th class="font-medium">Created</th>
+                <th class="font-medium">Action</th>
+              </tr>
+            </thead>
+            <tbody id="table-file"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <div
+        class="fixed w-[100%] bg-white shad top-0 h-full p-6 space-y-6 z-50"
+        style="right: -100%; transition: 0.3s"
+        id="drawer"
+      >
         <div class="flex justify-between items-center">
-             <h1 class="text-lg font-medium text-gray-600">Adding a new file</h1>
-             <button onclick="toggleDrawer()">
-                <i class="ri-close-circle-line hover:text-rose-600"></i>
-             </button>
+          <h1 class="text-lg font-medium text-gray-600">Adding a new file</h1>
+          <button onclick="toggleDrawer()">
+            <i class="ri-close-circle-line hover:text-rose-600"></i>
+          </button>
         </div>
         <div class="h-px bg-gray-100 -mx-6"></div>
         <form action="" class="space-y-6" onsubmit="uploadFile(event)">
-            <div class="flex flex-col gap-2">
-                <label class="text-gray-600 font-medium">Filename</label>
-                <input type="text" name="filename" id="filename" class="py-2 px-3 rounded border border-gray-300" placeholder="Enter file name" required>
-            </div>
-            <div class="flex flex-col gap-2">
-                <label class="text-gray-600 font-medium">Filename</label>
-                <input type="file" name="file" id="choosenFile" class="py-2 px-3 rounded border border-gray-300" required>
-            </div>
-            <button class="w-full py-2 px-3 bg-rose-400 hover:bg-rose-600 rounded font-medium text-white" id="upload-btn">Upload now</button>
+          <div class="flex flex-col gap-2">
+            <label class="text-gray-600 font-medium">Filename</label>
+            <input
+              type="text"
+              name="filename"
+              id="filename"
+              class="py-2 px-3 rounded border border-gray-300"
+              placeholder="Enter file name"
+              required
+            />
+          </div>
+          <div class="flex flex-col gap-2">
+            <label class="text-gray-600 font-medium">Filename</label>
+            <input
+              type="file"
+              name="file"
+              id="choosenFile"
+              class="py-2 px-3 rounded border border-gray-300"
+              required
+            />
+          </div>
+          <button
+            class="w-full py-2 px-3 bg-rose-400 hover:bg-rose-600 rounded font-medium text-white"
+            id="upload-btn"
+          >
+            Upload now
+          </button>
         </form>
-        
+
         <div class="bg-gray-200 h-4">
-            <div class="h-full bg-green-500 text-sm text-gray-50 text-center " style="width: 0;" id="progress-bar"></div>
+          <div
+            class="h-full bg-green-500 text-sm text-gray-50 text-center"
+            style="width: 0"
+            id="progress-bar"
+          ></div>
         </div>
+      </div>
     </div>
-</div>
-<script src="../js/env.js"></script>
-<script src="../js/session.js"></script>
-<script src="../js/layout.js"></script>
-<script src="../js/file.js"></script>
-</body>
+    <script src="../js/env.js"></script>
+    <script src="../js/session.js"></script>
+    <script src="../js/layout.js"></script>
+    <script src="../js/file.js"></script>
+  </body>
 </html>

@@ -30,7 +30,7 @@ const toggleDrawer = () => {
   const rightValue = drawer.style.right;
 
   if (rightValue === "0%") {
-    drawer.style.right = "-33.33%";
+    drawer.style.right = "-100%";
   } else {
     drawer.style.right = "0%";
   }
@@ -52,13 +52,13 @@ const getExtentionForDownload = (ext) => {
   return ext;
 };
 
-const showUserDetail = async ()=>{
-    const session = await getSession()
-    const fullname = document.getElementById("fullname")
-    const email = document.getElementById("email")
-    fullname.innerHTML = session.fullname
-    email.innerHTML = session.email
-}
+const showUserDetail = async () => {
+  const session = await getSession();
+  const fullname = document.getElementById("fullname");
+  const email = document.getElementById("email");
+  fullname.innerHTML = session.fullname;
+  email.innerHTML = session.email;
+};
 
 const uploadFile = async (e) => {
   try {
@@ -116,14 +116,25 @@ const fetchFile = async () => {
                         <td>${getSize(file.size)} Mb</td>
                         <td>${moment(file.createdAt).format("DD MMM YYYY, hh:mm A")}</td>
                         <td>
-                            <div class="space-x-3">
-                                <button class="bg-rose-400 px-2 py-1 text-white hover:bg-rose-600 rounded" onclick="deleteFile('${file._id}', this)">
+                            <div class="flex flex-nowrap items-center gap-2">
+                                <button
+                                    class="shrink-0 rounded bg-rose-400 px-2 py-1 text-white hover:bg-rose-600"
+                                    onclick="deleteFile('${file._id}', this)"
+                                >
                                     <i class="ri-delete-bin-4-line"></i>
                                 </button>
-                                <button class="bg-green-400 px-2 py-1 text-white hover:bg-green-500 rounded" onclick="downloadFile('${file._id}', '${file.filename}', this)">
+
+                                <button
+                                    class="shrink-0 rounded bg-green-400 px-2 py-1 text-white hover:bg-green-500"
+                                    onclick="downloadFile('${file._id}', '${file.filename}', this)"
+                                >
                                     <i class="ri-download-line"></i>
                                 </button>
-                                <button class="bg-amber-400 px-2 py-1 text-white hover:bg-amber-600 rounded" onclick="openModelForShare('${file._id}', '${file.filename}', this)">
+
+                                <button
+                                    class="shrink-0 rounded bg-amber-400 px-2 py-1 text-white hover:bg-amber-600"
+                                    onclick="openModelForShare('${file._id}', '${file.filename}', this)"
+                                >
                                     <i class="ri-share-line"></i>
                                 </button>
                             </div>
@@ -216,42 +227,41 @@ const shareFile = async (id, e) => {
   }
 };
 
-const uploadImage = ()=>{
-    try{
-        const input = document.createElement("input")
-        const pic = document.getElementById('pic')
-        input.type = 'file'
-        input.accept = 'image/*'
-        input.click()
-    
-        input.onchange = async ()=>{
-            const file = input.files[0]
-            const formdata = new FormData()
-            formdata.append('picture', file)
-            await axios.post('/api/profile-picture', formdata, getToken())
-            fetchImage()
-        }
+const uploadImage = () => {
+  try {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.click();
 
-    } catch(err) {
-        toast.error(err.response ? err.response.data.message : err.message)
-    }
-}
+    input.onchange = async () => {
+      const file = input.files[0];
+      const formdata = new FormData();
+      formdata.append("picture", file);
+      await axios.post("/api/profile-picture", formdata, getToken());
+      fetchImage();
+    };
+  } catch (err) {
+    toast.error(err.response ? err.response.data.message : err.message);
+  }
+};
 
-const fetchImage = async ()=>{
-    try{
-        const options = {
-            responseType : 'blob',
-            ...getToken()
-        }
-        const {data} = await axios.get('/api/profile-picture', options)
-        const url = URL.createObjectURL(data)
-        const pic = document.getElementById("pic")
-        pic.src = url
-    } catch(err) {
-        if(!err.response)
-            return toast.error(err.message)
-        const error = await (err.response.data).text()
-        const {message} = JSON.parse(error)
-        toast.error(message)
-    }
-}
+const fetchImage = async () => {
+  try {
+    const options = {
+      responseType: "blob",
+      ...getToken(),
+    };
+    const { data } = await axios.get("/api/profile-picture", options);
+    const url = URL.createObjectURL(data);
+    const pics = document.querySelectorAll("#pic");
+    pics.forEach((pic) => {
+      pic.src = url;
+    });
+  } catch (err) {
+    if (!err.response) return toast.error(err.message);
+    const error = await err.response.data.text();
+    const { message } = JSON.parse(error);
+    toast.error(message);
+  }
+};

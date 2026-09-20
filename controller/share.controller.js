@@ -1,9 +1,9 @@
-const { text } = require("express")
-const ShareModel = require("../model/share.model")
-const nodemailer = require("nodemailer")
+const { text } = require("express");
+const ShareModel = require("../model/share.model");
+const nodemailer = require("nodemailer");
 
-const getMailTemplate = (link)=>{
-    return `
+const getMailTemplate = (link) => {
+  return `
     <!DOCTYPE html>
             <html>
             <head>
@@ -56,53 +56,56 @@ const getMailTemplate = (link)=>{
         </table>
     </body>
     </html>
-    `
-}
-const shareFile = async (req, res)=>{
-    try{
-        const {email, fileId} = req.body
-        const link = `${process.env.DOMAIN}/api/file/download/${fileId}`
-        const conn = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: process.env.SMTP_EMAIL,
-            pass: process.env.SMTP_PASSWORD
-        }
-        })
-        const payloadForSendMail = {
-            from: process.env.SMTP_EMAIL,
-            to: email,
-            subject : 'Filemoon - new file received',
-            html : getMailTemplate(link) 
-        }
+    `;
+};
+const shareFile = async (req, res) => {
+  try {
+    const { email, fileId } = req.body;
+    const link = `${process.env.DOMAIN}/api/file/download/${fileId}`;
+    const conn = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.SMTP_EMAIL,
+        pass: process.env.SMTP_PASSWORD,
+      },
+    });
+    const payloadForSendMail = {
+      from: process.env.SMTP_EMAIL,
+      to: email,
+      subject: "Filemoon - new file received",
+      html: getMailTemplate(link),
+    };
 
-        const payloadForShareModel = {
-            user: req.user.id,
-            receiverEmail: email,
-            file: fileId
-        }
-       
-        await Promise.all([
-                conn.sendMail(payloadForSendMail),
-                ShareModel.create(payloadForShareModel)
-        ])
-        
-        res.status(200).json({message : "Email sent"})
-    } catch(err) {
-        res.status(500).json({message : err.message})
-    }
-}
+    const payloadForShareModel = {
+      user: req.user.id,
+      receiverEmail: email,
+      file: fileId,
+    };
 
-const fetchShared = async (req, res)=>{
-    try{
-        const {limit} = req.query
-        const file = await ShareModel.find({user: req.user.id}).populate('file').sort({createdAt : -1}).limit(limit)
-        res.status(200).json(file)
-    } catch(err) {
-        res.status(500).json({message : err.message})
-    }
-}
+    await Promise.all([
+      conn.sendMail(payloadForSendMail),
+      ShareModel.create(payloadForShareModel),
+    ]);
+
+    res.status(200).json({ message: "Email sent" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const fetchShared = async (req, res) => {
+  try {
+    const { limit } = req.query;
+    const file = await ShareModel.find({ user: req.user.id })
+      .populate("file")
+      .sort({ createdAt: -1 })
+      .limit(limit);
+    res.status(200).json(file);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 module.exports = {
-    shareFile, 
-    fetchShared
-}
+  shareFile,
+  fetchShared,
+};
