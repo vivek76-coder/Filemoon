@@ -58,23 +58,66 @@ const getMailTemplate = (link) => {
     </html>
     `;
 };
+const sendBrevoEmail = async ({ to, subject, html }) => {
+  const apiKey = process.env.BREVO_API_KEY;
+  const senderEmail = process.env.BREVO_SENDER_EMAIL || process.env.SMTP_EMAIL;
+
+  const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+      "api-key": apiKey,
+    },
+    body: JSON.stringify({
+      sender: {
+        name: "Filemoon",
+        email: senderEmail,
+      },
+      to: [{ email: to }],
+      subject: subject,
+      htmlContent: html,
+    }),
+  });
+
+  if (!response.ok) {
+    const errData = await response.json().catch(() => ({}));
+    throw new Error(errData.message || `Brevo API error: ${response.statusText}`);
+  }
+
+  return response.json();
+};
+
+const sendEmail = async ({ to, subject, html }) => {
+  if (process.env.BREVO_API_KEY) {
+    return sendBrevoEmail({ to, subject, html });
+  }
+
+  // Fallback to Nodemailer if BREVO_API_KEY is not set
+  const conn = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.SMTP_EMAIL,
+      pass: process.env.SMTP_PASSWORD,
+    },
+  });
+
+  return conn.sendMail({
+    from: process.env.SMTP_EMAIL,
+    to,
+    subject,
+    html,
+  });
+};
+
 const shareFile = async (req, res) => {
   try {
     const { email, fileId } = req.body;
+    if (!email || !fileId) {
+      return res.status(400).json({ message: "email and fileId are required" });
+    }
+
     const link = `${process.env.DOMAIN}/api/file/download/${fileId}`;
-    const conn = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.SMTP_EMAIL,
-        pass: process.env.SMTP_PASSWORD,
-      },
-    });
-    const payloadForSendMail = {
-      from: process.env.SMTP_EMAIL,
-      to: email,
-      subject: "Filemoon - new file received",
-      html: getMailTemplate(link),
-    };
 
     const payloadForShareModel = {
       user: req.user.id,
@@ -83,12 +126,17 @@ const shareFile = async (req, res) => {
     };
 
     await Promise.all([
-      conn.sendMail(payloadForSendMail),
+      sendEmail({
+        to: email,
+        subject: "Filemoon - new file received",
+        html: getMailTemplate(link),
+      }),
       ShareModel.create(payloadForShareModel),
     ]);
 
     res.status(200).json({ message: "Email sent" });
   } catch (err) {
+    console.error("shareFile error:", err);
     res.status(500).json({ message: err.message });
   }
 };
