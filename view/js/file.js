@@ -41,16 +41,61 @@ const getSize = (fileSize) => {
   return mb.toFixed(1);
 };
 
-const getExtentionForDownload = (ext) => {
-  if (
-    ext === "x-msdownload" ||
-    ext === "x-msdos-program" ||
-    ext === "octet-stream"
-  )
-    return (ext = "exe");
 
-  return ext;
+const getExtentionForDownload = (ext) => {
+  const extensions = {
+    // Executable files
+    "x-msdownload": "exe",
+    "x-msdos-program": "exe",
+    "octet-stream": "bin",
+
+    // Microsoft Word
+    "msword": "doc",
+    "vnd.openxmlformats-officedocument.wordprocessingml.document": "docx",
+
+    // Microsoft PowerPoint
+    "vnd.ms-powerpoint": "ppt",
+    "vnd.openxmlformats-officedocument.presentationml.presentation": "pptx",
+
+    // Microsoft Excel
+    "vnd.ms-excel": "xls",
+    "vnd.openxmlformats-officedocument.spreadsheetml.sheet": "xlsx",
+
+    // PDF
+    "pdf": "pdf",
+
+    // ZIP and compressed files
+    "zip": "zip",
+    "x-zip-compressed": "zip",
+    "x-rar-compressed": "rar",
+    "vnd.rar": "rar",
+    "x-7z-compressed": "7z",
+    "gzip": "gz",
+
+    // Text and web files
+    "plain": "txt",
+    "csv": "csv",
+    "html": "html",
+    "css": "css",
+    "javascript": "js",
+    "json": "json",
+
+    // Images
+    "jpeg": "jpg",
+    "png": "png",
+    "gif": "gif",
+    "webp": "webp",
+    "svg+xml": "svg",
+
+    // Audio and video
+    "mpeg": "mp3",
+    "mp4": "mp4",
+    "webm": "webm",
+  };
+
+  return extensions[ext] || ext;
 };
+
 
 const showUserDetail = async () => {
   const session = await getSession();
