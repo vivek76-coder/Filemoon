@@ -216,6 +216,7 @@ const downloadFile = async (id, filename, button) => {
       responseType: "blob",
     };
     const { data } = await axios.get(`/api/file/download/${id}`, option);
+    console.log(data)
     const ext = getExtentionForDownload(data.type.split("/").pop());
     const url = URL.createObjectURL(data);
     const a = document.createElement("a");
